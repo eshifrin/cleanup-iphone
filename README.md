@@ -2,7 +2,7 @@
 
 Use this if your iPhone is a mess.
 
-Best used with an agentic coding tool (ccode, codex, or Cursor). You can ask the agent to:
+Best used with an agentic coding tool (Claude Code, codex, or Cursor). You can ask the agent to:
 
 - see a clear list of installed apps and folders (`summarize --verbose`)
 - download backup files of your current layout (`backup`)
