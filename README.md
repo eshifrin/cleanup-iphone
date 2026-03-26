@@ -1,5 +1,8 @@
 # cleanup-iphone
 
+Use this if your iphone is a mess.  
+
+
 Scripted iPhone home screen cleanup using USB + SpringBoard APIs.
 
 This repo is meant to be practical:
