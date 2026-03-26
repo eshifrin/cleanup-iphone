@@ -1,6 +1,14 @@
 # cleanup-iphone
 
-Use this if your iphone is a mess.  
+Use this if your iPhone is a mess.
+
+Best used with an agentic coding tool (ccode, codex, or Cursor). You can ask the agent to:
+
+- see a clear list of installed apps and folders (`summarize --verbose`)
+- download backup files of your current layout (`backup`)
+- delete a subset from your current layout plan before applying changes
+- suggest ideas for how to rearrange apps
+- group apps logically into folders (just ask, then apply with `create-folder` / `move-app`)
 
 
 Scripted iPhone home screen cleanup using USB + SpringBoard APIs.
