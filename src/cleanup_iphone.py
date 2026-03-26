@@ -8,6 +8,7 @@ Commands:
   - summarize
   - repack
   - move-app
+  - delete-app
   - create-folder
 """
 
@@ -329,6 +330,33 @@ async def cmd_move_app(args):
     print(f"Applied move. Backup: {backup}")
 
 
+async def cmd_delete_app(args):
+    client = DeviceClient()
+    await client.connect()
+    state = await client.get_state()
+
+    removed = 0
+    for app_name_input in args.apps:
+        _, src = pop_app_by_name(state, app_name_input)
+        if src is None:
+            print(f"Skip: {app_name_input} (not found)")
+            continue
+        removed += 1
+        print(f"Delete: {app_name_input} from {src}")
+
+    if removed == 0:
+        print("No matching apps found. Nothing to delete.")
+        sys.exit(1)
+
+    if args.dry_run:
+        print(f"[DRY RUN] Would delete {removed} app(s) from current layout.")
+        return
+
+    backup = save_prechange_backup(Path(args.output_dir), state, "pre_delete_app")
+    await client.set_state(state)
+    print(f"Applied delete. Backup: {backup}")
+
+
 async def cmd_create_folder(args):
     client = DeviceClient()
     await client.connect()
@@ -398,6 +426,16 @@ def build_parser():
     p_move.add_argument("--folder", help="Optional target folder name on that page")
     p_move.add_argument("--dry-run", action="store_true", help="Preview only, do not apply")
     p_move.set_defaults(func=cmd_move_app)
+
+    p_delete = sub.add_parser("delete-app", help="Delete one or more apps from current layout")
+    p_delete.add_argument(
+        "--apps",
+        nargs="+",
+        required=True,
+        help="App display names to remove from the current home screen layout",
+    )
+    p_delete.add_argument("--dry-run", action="store_true", help="Preview only, do not apply")
+    p_delete.set_defaults(func=cmd_delete_app)
 
     p_folder = sub.add_parser("create-folder", help="Create/use folder and move apps into it")
     p_folder.add_argument("--name", required=True, help="Folder name")

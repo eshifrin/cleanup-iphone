@@ -6,7 +6,7 @@ Best used with an agentic coding tool (ccode, codex, or Cursor). You can ask the
 
 - see a clear list of installed apps and folders (`summarize --verbose`)
 - download backup files of your current layout (`backup`)
-- delete a subset from your current layout plan before applying changes
+- delete a subset of apps from your current layout (`delete-app`)
 - suggest ideas for how to rearrange apps
 - group apps logically into folders (just ask, then apply with `create-folder` / `move-app`)
 
@@ -66,6 +66,30 @@ python3 src/cleanup_iphone.py repack
 ### 7) Restore if needed
 ```bash
 python3 src/cleanup_iphone.py restore artifacts/backups/icon_layout_backup_YYYYMMDD_HHMMSS.plist
+```
+
+## Delete apps: safe process
+
+Use this when you want to remove specific apps from the home screen layout quickly.
+
+1) Back up first:
+```bash
+python3 src/cleanup_iphone.py backup
+```
+
+2) Preview the delete:
+```bash
+python3 src/cleanup_iphone.py delete-app --apps "Facebook" "LinkedIn" --dry-run
+```
+
+3) Apply the delete:
+```bash
+python3 src/cleanup_iphone.py delete-app --apps "Facebook" "LinkedIn"
+```
+
+4) If needed, restore instantly:
+```bash
+python3 src/cleanup_iphone.py restore artifacts/backups/pre_delete_app_YYYYMMDD_HHMMSS.plist
 ```
 
 ## Common Workflows
