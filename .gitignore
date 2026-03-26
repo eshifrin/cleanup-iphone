@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+
+artifacts/backups/*.plist
+artifacts/backups/*.json
+artifacts/backups/*.txt
