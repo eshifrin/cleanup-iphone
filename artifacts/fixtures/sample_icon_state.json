@@ -1,0 +1,74 @@
+[
+  [
+    {
+      "displayName": "Phone",
+      "bundleIdentifier": "com.apple.mobilephone"
+    },
+    {
+      "displayName": "Messages",
+      "bundleIdentifier": "com.apple.MobileSMS"
+    },
+    {
+      "displayName": "Music",
+      "bundleIdentifier": "com.apple.Music"
+    },
+    {
+      "displayName": "Safari",
+      "bundleIdentifier": "com.apple.mobilesafari"
+    }
+  ],
+  [
+    {
+      "displayName": "Calendar",
+      "bundleIdentifier": "com.apple.mobilecal"
+    },
+    {
+      "displayName": "LLM",
+      "listType": "folder",
+      "iconLists": [
+        [
+          {
+            "displayName": "ChatGPT",
+            "bundleIdentifier": "com.openai.chat"
+          },
+          {
+            "displayName": "Claude",
+            "bundleIdentifier": "ai.anthropic.claude"
+          },
+          {
+            "displayName": "Gemini",
+            "bundleIdentifier": "com.google.gemini"
+          }
+        ]
+      ]
+    },
+    {
+      "displayName": "Notion",
+      "bundleIdentifier": "notion.id"
+    }
+  ],
+  [
+    {
+      "displayName": "Finance",
+      "listType": "folder",
+      "iconLists": [
+        [
+          {
+            "displayName": "Robinhood",
+            "bundleIdentifier": "com.robinhood.release.Robinhood"
+          },
+          {
+            "displayName": "Coinbase",
+            "bundleIdentifier": "com.coinbase.Coinbase"
+          }
+        ],
+        [
+          {
+            "displayName": "Revolut",
+            "bundleIdentifier": "com.revolut.revolut"
+          }
+        ]
+      ]
+    }
+  ]
+]
