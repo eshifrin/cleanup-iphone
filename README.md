@@ -77,6 +77,14 @@ This repo now includes a lightweight planner UI at `web/index.html` for visual p
 - draggable app/folder cards,
 - fixture upload + reset controls.
 
+Planner overview:
+
+![iPhone planner overview](docs/images/planner-overview.png)
+
+Planner detail (drag targets and cards):
+
+![iPhone planner detail](docs/images/planner-detail.png)
+
 Open it directly in your browser:
 
 ```bash
