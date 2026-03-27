@@ -10,6 +10,7 @@ Commands:
   - move-app
   - delete-app
   - create-folder
+  - export-fixture
 """
 
 import argparse
@@ -21,6 +22,11 @@ import plistlib
 import sys
 from datetime import datetime
 from pathlib import Path
+
+try:
+    from .layout_fixture import icon_state_to_fixture, write_fixture_file
+except ImportError:
+    from layout_fixture import icon_state_to_fixture, write_fixture_file
 
 logging.getLogger("asyncio").setLevel(logging.CRITICAL)
 
@@ -393,6 +399,25 @@ async def cmd_create_folder(args):
     print(f"Applied folder update. Backup: {backup}")
 
 
+async def cmd_export_fixture(args):
+    if args.from_plist:
+        backup_path = Path(args.from_plist)
+        if not backup_path.exists():
+            print(f"Input plist not found: {backup_path}")
+            sys.exit(1)
+        with open(backup_path, "rb") as handle:
+            state = plistlib.load(handle)
+    else:
+        client = DeviceClient()
+        await client.connect()
+        state = await client.get_state()
+
+    fixture = icon_state_to_fixture(state)
+    output_path = Path(args.output)
+    write_fixture_file(fixture, output_path)
+    print(f"Saved fixture: {output_path}")
+
+
 def build_parser():
     parser = argparse.ArgumentParser(description="iPhone home screen cleanup toolkit")
     parser.add_argument(
@@ -443,6 +468,21 @@ def build_parser():
     p_folder.add_argument("--apps", nargs="+", required=True, help="App display names to move")
     p_folder.add_argument("--dry-run", action="store_true", help="Preview only, do not apply")
     p_folder.set_defaults(func=cmd_create_folder)
+
+    p_fixture = sub.add_parser(
+        "export-fixture",
+        help="Export a drag-and-drop UI fixture from device state or a plist backup",
+    )
+    p_fixture.add_argument(
+        "--from-plist",
+        help="Optional backup plist path. If omitted, reads live state from connected device.",
+    )
+    p_fixture.add_argument(
+        "--output",
+        default="artifacts/fixtures/icon_layout_fixture.json",
+        help="Output JSON fixture path (default: artifacts/fixtures/icon_layout_fixture.json)",
+    )
+    p_fixture.set_defaults(func=cmd_export_fixture)
 
     return parser
 

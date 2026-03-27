@@ -9,6 +9,7 @@ Best used with an agentic coding tool (Claude Code, codex, or Cursor). You can a
 - delete a subset of apps from your current layout (`delete-app`)
 - suggest ideas for how to rearrange apps
 - group apps logically into folders (just ask, then apply with `create-folder` / `move-app`)
+- export drag-and-drop UI fixtures (`export-fixture`)
 
 
 Scripted iPhone home screen cleanup using USB + SpringBoard APIs.
@@ -66,6 +67,51 @@ python3 src/cleanup_iphone.py repack
 ### 7) Restore if needed
 ```bash
 python3 src/cleanup_iphone.py restore artifacts/backups/icon_layout_backup_YYYYMMDD_HHMMSS.plist
+```
+
+## Drag-and-Drop Planner UI
+
+This repo now includes a lightweight planner UI at `web/index.html` for visual planning:
+
+- one long page with each iPhone page rendered as a square grid,
+- draggable app/folder cards,
+- fixture upload + reset controls.
+
+Planner overview:
+
+![iPhone planner overview](docs/images/planner-overview.png)
+
+Planner detail (drag targets and cards):
+
+![iPhone planner detail](docs/images/planner-detail.png)
+
+Open it directly in your browser:
+
+```bash
+open web/index.html
+```
+
+or on Linux:
+
+```bash
+xdg-open web/index.html
+```
+
+### Generate fixture JSON for the UI
+
+From a backup plist:
+
+```bash
+python3 src/cleanup_iphone.py export-fixture \
+  --from-plist artifacts/backups/icon_layout_backup_YYYYMMDD_HHMMSS.plist \
+  --output artifacts/fixtures/icon_layout_fixture.json
+```
+
+From a live connected device:
+
+```bash
+python3 src/cleanup_iphone.py export-fixture \
+  --output artifacts/fixtures/icon_layout_fixture.json
 ```
 
 ## Delete apps: safe process
